@@ -22,7 +22,7 @@
 var fs = require('fs');
 var path = require('path');
 var url = require('url');
-var cordovaServe = require('cordova-serve');
+const CreateExpressApp = require('../../../../../../../src/server/CreateExpressApp');
 
 module.exports.run = function (args) {
     // defaults
@@ -45,8 +45,8 @@ module.exports.run = function (args) {
         }
     }
 
-    var server = cordovaServe();
-    server.servePlatform('browser', { port: args.port, noServerInfo: true, noLogOutput: args.noLogOutput })
+    var server = CreateExpressApp();
+    server.launchServer('browser', { port: args.port, noServerInfo: true, noLogOutput: args.noLogOutput })
         .then(function () {
             if (!startPage) {
                 // failing all else, set the default

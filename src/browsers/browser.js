@@ -11,7 +11,6 @@ const NOT_SUPPORTED = 'The browser target is not supported: %target%';
 
 /**
  * Launches the specified browser with the given URL.
- * Based on Apache cordova-serve: https://github.com/apache/cordova-serve
  */
 function launchBrowser(opts) {
     opts = opts || {};

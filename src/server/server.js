@@ -3,7 +3,6 @@
 var fs = require('fs'),
     path = require('path'),
     replaceStream = require('replacestream'),
-    cordovaServe = require('cordova-serve'),
     cspParse = require('csp-parse'),
     send = require('send-transform'),
     url = require('url'),
@@ -13,6 +12,8 @@ var fs = require('fs'),
     SocketServer = require('./socket'),
     pluginSimulationFiles = require('./plugin-files'),
     utils = require('./utils/jsUtils');
+
+const createExpressApp = require('./CreateExpressApp');
 
 /**
  * Maximum length of <meta> tag we search for when modifying CSP properties
@@ -67,7 +68,7 @@ Object.defineProperties(SimulationServer.prototype, {
 SimulationServer.prototype.start = function (platform, opts) {
     var config = this._simulatorProxy.config;
 
-    this._cordovaServer = cordovaServe();
+    this._cordovaServer = createExpressApp();
 
     /* attach simulation host middleware */
     var middlewarePath = path.join(config.simHostOptions.simHostRoot, 'server', 'server.js');
@@ -104,7 +105,7 @@ SimulationServer.prototype.start = function (platform, opts) {
         serverOpts.middleware = this._config.middleware;
     }
 
-    return this._cordovaServer.servePlatform(platform, serverOpts)
+    return this._cordovaServer.launchServer(platform, serverOpts)
         .then(function () {
             this._trackServerConnections();
             this._simSocket.init(this._cordovaServer.server);
@@ -418,8 +419,8 @@ SimulationServer.prototype._trackServerConnections = function () {
  * @private
  */
 SimulationServer.prototype._isServerReady = function () {
-    // Cordova-serve assign the new HTTP Server instance after the call
-    // to servePlatform.
+    // CreateExpressApp assign the new HTTP Server instance after the call
+    // to launchServer.
     return !!this.server;
 };
 

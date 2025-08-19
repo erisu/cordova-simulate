@@ -2,12 +2,13 @@
 
 var fs = require('fs'),
     path = require('path'),
-    cordovaServe = require('cordova-serve'),
     dirs = require('./dirs'),
     pluginUtil = require('./utils/plugins'),
     prepareUtil = require('./utils/prepare'),
     utils = require('./utils/jsUtils'),
     log = require('./utils/log');
+
+const express = require('express');
 
 /**
  * The Project model encapsulates the information and state about the project under
@@ -165,7 +166,7 @@ Project.prototype.getPlugins = function () {
 };
 
 Project.prototype.getRouter = function () {
-    this._router = this._router || cordovaServe.Router();
+    this._router = this._router || express.Router();
     return this._router;
 };
 
@@ -282,7 +283,7 @@ Project.prototype._populateRouter = function () {
     router.stack = [];
 
     Object.keys(this.plugins).forEach(function (plugin) {
-        router.use('/simulator/plugin/' + plugin, cordovaServe.static(this.plugins[plugin]));
+        router.use('/simulator/plugin/' + plugin, express.static(this.plugins[plugin]));
     }.bind(this));
 };
 

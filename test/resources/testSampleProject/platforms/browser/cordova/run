@@ -23,8 +23,7 @@ var fs = require('fs'),
     path = require('path'),
     nopt  = require('nopt'),
     url = require('url'),
-    runForrest = require('./lib/run'),
-    cordovaServe = require('cordova-serve');
+    runForrest = require('./lib/run');
 
 var args = process.argv;
 

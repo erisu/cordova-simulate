@@ -123,8 +123,8 @@ limitations under the License.
 
 ---------------------------------------------------------
 
-cordova-serve 4.0.1-nightly.2022.2.9.4f03d377 - Apache-2.0
-https://github.com/apache/cordova-serve#readme
+./src/server/CreateExpressApp.js - Apache-2.0
+./src/server/cordova-util.js - Apache-2.0
 
 Copyright 2017 The Apache Software Foundation
 
